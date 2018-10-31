@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  
 }
 
 .App-logo {
@@ -29,4 +30,19 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.btn.btn-default{
+  border: none;
+  background-color: grey;
+
+}
+
+.navbar.navbar-default{
+  background-color: grey;
+}
+
+.login{
+   font-size: 200%;
+   color: white;
 }
