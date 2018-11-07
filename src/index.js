@@ -6,7 +6,6 @@ import { reactReduxFirebase, firebaseReducer } from 'react-redux-firebase';
 import firebase from 'firebase';
 import './index.css';
 import App from './App';
-import * as serviceWorker from './serviceWorker';
 
 const firebaseConfig = {
 	    apiKey: "AIzaSyD8Ke2IleGyrl3sm80KGxtRgGL8rTkcfZs",

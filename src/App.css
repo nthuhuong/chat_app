@@ -43,6 +43,10 @@
 }
 
 .login{
-   font-size: 200%;
-   color: white;
+   
+   padding-bottom: 12px;
+}
+.waves-effect.waves-light.btn-small.pink.lighten-1.z-depth-g.singin{
+ text-align: center;
+ padding: 25px 105px;
 }
