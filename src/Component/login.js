@@ -5,11 +5,13 @@ import { connect } from 'react-redux'
 import { firebaseConnect, isLoaded, isEmpty } from 'react-redux-firebase'
 import '../App.css'
 import GoogleButton from 'react-google-button' 
+import { loginWithGoogle } from '../store/actions/chatActions'
+
 
 export const LoginPage = ({ firebase, auth }) => (
   <div className ="center-align">
   <button className="pink lighten-1 z-depth-g"><b><GoogleButton className="pink lighten-1 z-depth-g" 
-  onClick={() => firebase.login({ provider: 'google', type: 'popup' })}/></b></button>
+  onClick={this.han}/></b></button>
      <div>
       <h2>Auth</h2>
       {
