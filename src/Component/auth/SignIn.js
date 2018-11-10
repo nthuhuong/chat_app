@@ -2,12 +2,15 @@ import React, { Component } from 'react'
 import '../../App.css'
 import { withRouter } from 'react-router'
 //import LoginPage from '../../Component/login'
+import { loadItem } from '../../services/localStorage.services'
 import PropTypes from 'prop-types'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
 import { firebaseConnect, isLoaded, isEmpty } from 'react-redux-firebase'
 import GoogleButton from 'react-google-button' 
-import { loginWithGoogle } from '../../store/actions/chatActions'
+import { loginWithGoogle } from '../../store/actions/authActions'
+import { accountStatus } from '../../constants/localStorage'
+import { Redirect } from 'react-router-dom'
 
 
 class SignIn extends Component{
@@ -22,7 +25,7 @@ class SignIn extends Component{
 	constructor(props){
 		super(props)
 		this.state = {
-			email: '',
+			username: '',
 			password: '',
 			isSubmit: false
 		}
@@ -48,6 +51,9 @@ class SignIn extends Component{
 
 
 	render(){
+		if(loadItem('account_status') === accountStatus.LoGGED){
+			return <Redirect to = '/signup' />
+		}
 		return(
 
 			<div className="container">
@@ -56,7 +62,7 @@ class SignIn extends Component{
 					<h5 className="grey-text text-darken-3">Sign In</h5>
 					<div className="imput-field">
 						<label htmlFor="email">Email</label>
-						<input type="email" id="email" onChange={this.handleChange}/>
+						<input type="email" id="username" onChange={this.handleChange}/>
 					</div>
 					<div className="imput-field">
 						<label htmlFor="password">Password</label>
@@ -73,7 +79,7 @@ class SignIn extends Component{
 					</div>
 				</form>
 			</div>
-		)
+		);
 	}
 }
 const mapDispatchToProps = (dispatch) => {
