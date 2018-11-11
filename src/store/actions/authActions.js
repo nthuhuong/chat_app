@@ -34,17 +34,17 @@ export const loginWithGoogle = () =>{
 
 
 export const logout = (redirectCallback) => {
-	return (dispatch, getState, {getFirebase}) => {
-		const firebase = getFirebase();
-		let uid = firebase.auth()
-		firebase.auth().signOut().then(() => {
-			saveItem('account_status', 'UNLOGGED')
-			dispatch({type: actionTypes.LOGOUT})
-			var userLastConnectedRef = firebase.database().ref("lastOnline/" + uid)
-            userLastConnectedRef.set({endAt: firebase.database.ServerValue.TIMESTAMP})
-		}).then(() => {
-			redirectCallback()
-		})
+  return (dispatch, getState, {getFirebase, getFirestore}) => {
+    const firebase = getFirebase();
+    let uid = firebase.auth().O
+    firebase.auth().signOut().then(() => {
+      saveItem('account_status', 'UNLOGGED')
+      dispatch({type: actionTypes.LOGOUT})
 
-	}
-}	
+      var userLastConnectedRef = firebase.database().ref("lastOnline/" + uid)
+      userLastConnectedRef.set({endAt: firebase.database.ServerValue.TIMESTAMP})
+    }).then(() => {
+      redirectCallback()
+    })
+  }
+}

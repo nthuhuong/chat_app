@@ -51,7 +51,7 @@ class SignIn extends Component{
 
 
 	render(){
-		if(loadItem('account_status') === accountStatus.LoGGED){
+		if(loadItem('account_status') === accountStatus.LOGGED){
 			return <Redirect to = '/signup' />
 		}
 		return(

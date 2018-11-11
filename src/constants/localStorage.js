@@ -1,4 +1,4 @@
 export const accountStatus = {
-	LoGGED: 'LOGGED',
+	LOGGED: 'LOGGED',
 	UNLOGGED: 'UNLOGGED'
 }
