@@ -17,7 +17,7 @@ const store = createStore(rootReducer,
   compose(
     applyMiddleware(thunk.withExtraArgument({getFirebase, getFirestore})),
     reduxFirestore(fbConfig),
-    reactReduxFirebase(fbConfig)
+    reactReduxFirebase(fbConfig, { attachAuthIsReady: true})
   )
 );
 
@@ -36,13 +36,16 @@ const createStoreWithFirebase = compose(
  // firebase: firebaseReducer,
 //})
 
-const initialState = {}
+//const initialState = {}
 //const store = createStoreWithFirebase(rootReducer, initialState)
+store.firebaseAuthIsReady.then(() => {
 
+    ReactDOM.render(
+        <Provider store = { store }>
+            <App />
+        </Provider>,
+        document.getElementById('root')
+    );
+    
+})
 
-ReactDOM.render(
-	<Provider store = { store }>
-		<App />
-	</Provider>,
-    document.getElementById('root')
-);

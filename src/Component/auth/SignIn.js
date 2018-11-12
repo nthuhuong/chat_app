@@ -52,7 +52,7 @@ class SignIn extends Component{
 
 	render(){
 		if(loadItem('account_status') === accountStatus.LOGGED){
-			return <Redirect to = '/signup' />
+			return <Redirect to = '/homechat' />
 		}
 		return(
 

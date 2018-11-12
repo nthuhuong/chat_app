@@ -1,0 +1,34 @@
+.current-user{
+	position: relative;
+	display: inline-block;
+	float: right;
+	cursor: pointer;
+	transition: 0.2s all;
+}
+
+
+.chat-header {
+      
+      background: $main-color;
+ }
+
+
+img{
+	max-width: 100%;
+	margin-left: 100px;
+	position: relative;
+	top: 6px;
+	float: right;
+	width: 50px;
+	border-radius: 50%;
+}
+
+h3{
+	margin-bottom: 0px;
+	margin-left: 10px;
+	margin-right: 0px;
+	float: right;
+	font-size: 20px;
+	font-weight: bold;
+	color: white;
+}

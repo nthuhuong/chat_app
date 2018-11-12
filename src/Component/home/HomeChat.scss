@@ -1,0 +1,78 @@
+@import '../../styles/variables';
+
+:local(.homePage) {
+  font: 14px/20px "Lato", Arial, sans-serif;
+  .container-app {
+    // margin: 50px auto;
+    // width: 74%px;
+    // border-radius: 8px;
+    background: #444753;
+    padding: 0;
+    height: 100vh;
+  }
+
+  .me,
+  .offline,
+  .online {
+    margin-right: 3px;
+    font-size: 10px;
+  }
+
+  .online {
+    color: $green;
+  }
+
+  .offline {
+    color: $orange;
+  }
+
+  .me {
+    color: $blue;
+  }
+
+  .align-left {
+    text-align: left;
+  }
+
+  .align-right {
+    text-align: right;
+  }
+
+  .float-right {
+    float: right;
+  }
+
+  .clearfix:after {
+    visibility: hidden;
+    display: block;
+    font-size: 0;
+    content: " ";
+    clear: both;
+    height: 0;
+  }
+
+  ul{
+    list-style: none;
+    margin: 0;
+  }
+  .circle{
+    width: 8px;
+    height: 8px;
+    background: black;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 2px;
+    &.online{
+      background: #9DF57A;
+    }
+    &.offline{
+      background: #E38968;
+    }
+    &.me{
+      background: $main-color;
+    }
+    &.other{
+      background: #444753;
+    }
+  }
+}
