@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import styles from'./user.scss';
+import styles from './user.scss';
 import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
@@ -27,7 +27,7 @@ class User extends Component {
 	}
 
 
-	/*componentDidMount(){
+	componentDidMount(){
     if(this.props.match && this.props.match.params.id === this.props.user.UID){
       this.setState({
         active: true
@@ -53,7 +53,7 @@ class User extends Component {
         active: false
       })
     }
-  }*/
+  }
 
 	handleStar(){
 		const {firestore} = this.props
@@ -108,7 +108,7 @@ class User extends Component {
 			       <img src={user.photoURL ? user.photoURL : defaulAvatar} alt="avatar"/>
 			       <div className = "about">
 				       <div className="name">{user.display_name}</div>
-				       <div>
+				       <div className="status">
 					       <span className={user.status === "online" ? "circle online" : "circle offline"}/>
 					        {user.status}
 					        {user.endAt && user.status === "offline" &&

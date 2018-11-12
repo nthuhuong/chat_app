@@ -138,3 +138,46 @@ export const sendMessage = (data, callback) => {
 		}
 	}
 }
+
+
+export const updateStatus = () => {
+  return (dispatch, getState, {getFirebase, getFirestore}) => {
+    const firebase = getFirebase();
+    const firestore = getFirestore();
+    let uid = firebase.auth().O
+
+    var userLastConnectedRef = firebase.database().ref("lastOnline/" + uid)
+    var connectedRef = firebase.database().ref("presence");
+    connectedRef.on("value", function(snap) {
+      let value = snap.val()
+      if (value) {
+        value = Object.entries(value)
+        value.forEach((item) => {
+          firestore.get({collection: 'users', where: [['UID', '==', item[0]]]}).then((data) => {
+            if(data.docs.length){
+              let id = data.docs[0].id
+              firestore.update({collection: 'users', doc: id}, {status: "online"})
+            }
+          })
+        })
+        userLastConnectedRef.remove()
+        userLastConnectedRef.onDisconnect().set({endAt: firebase.database.ServerValue.TIMESTAMP})
+      }
+    });
+    var lastOnlineRef = firebase.database().ref('lastOnline')
+    lastOnlineRef.on("value", function(snap){
+      let value = snap.val()
+      if (value) {
+        value = Object.entries(value)
+        value.forEach((item) => {
+          firestore.get({collection: 'users', where: [['UID', '==', item[0]]]}).then((data) => {
+            if(data.docs.length){
+              let id = data.docs[0].id
+              firestore.update({collection: 'users', doc: id}, {status: "offline", endAt: item[1].endAt})
+            }
+          })
+        })
+      }
+    })
+  }
+}

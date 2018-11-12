@@ -11,10 +11,7 @@ import {connectStringID} from '../../services/utils.services'
 
 class SignedInLink extends Component {
 
-	constructor(props){
-		super(props)
-	}
-
+	
 	handleLogout(){
 		this.props.logout(() => {
 			this.props.history.push('/')
@@ -23,22 +20,19 @@ class SignedInLink extends Component {
 
     render(){
     const {profile} = this.props
-    const uid = profile.uid ? profile.uid : profile.UID
+    
     const display_name = profile.display_name ? profile.display_name : profile.displayName
 		return(
 			<ul className = "right">
 			<li><NavLink to='/'>
-				<div className>
-				    <div className={this.props.showSidebar ? "d-none" : "chat" }>
-		                <div className="chat-header clearfix">
-			                <div className="current-user">
-			                    <h3>{display_name}</h3>
-			                    <img src={this.props.profile && this.props.profile.photoURL ? this.props.profile.photoURL : defaulAvatar} alt="avatar" />
-			                </div>
-		                </div>        
-	                </div>
-                </div>
-				 
+			    <div className={this.props.showSidebar ? "d-none" : "chat" }>
+	                <div className="chat-header clearfix">
+		                <div className="current-user">
+		                    <h3>{display_name}</h3>
+		                    <img src={this.props.profile && this.props.profile.photoURL ? this.props.profile.photoURL : defaulAvatar} alt="avatar" />
+		                </div>
+	                </div>        
+                </div>	 
 			</NavLink></li>
 			<li><a onClick ={this.handleLogout.bind(this)}><b>Log Out</b></a></li>
 			</ul>

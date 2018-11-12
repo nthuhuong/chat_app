@@ -8,7 +8,8 @@ import { logout, sendMessage } from '../../store/actions/authActions'
 import { Icon } from 'react-icons-kit'
 import {signOut, info, fileImageO, fileO, send, bars} from 'react-icons-kit/fa'
 //import logo from '../../images/logoNav2.png'
-import ClickOutside from '../clickoutside/ClickOutSide'
+//import ClickOutside from '../clickoutside/ClickOutSide'
+import SlickLightbox from '../slicklightbox/SlickLightbox'
 import {withFirestore} from 'react-redux-firebase'
 import {compose} from 'redux'
 import _ from 'lodash'
@@ -38,19 +39,42 @@ class ChatApp extends Component {
     }
   }
 
-  handleCloseDropdown(){
+  handleOnSubmit(){
+    if((this.state.content || this.state.files.length) && this.props.match.params && this.props.match.params.id){
+      let sendmessage = this.state.content.replace(/(\r\n|\n)/g, '<br/>')
+      this.props.sendMessage(
+        {messages: this.state.messages, content: transferToImage(sendmessage), files: this.state.files, infoUser: this.props.infoUser},
+        () => {this.scrollToBottom()}
+      )
+      this.setState({
+        files: [],
+        content: ''
+      })
+    }
+  }
+
+  handleKeyPress(event){
+    if(event.key === 'Enter' && !event.altKey && this.props.match.params && this.props.match.params.id){
+      event.preventDefault();
+      event.target.value = ""
+      this.handleOnSubmit()
+    } else if (event.key === 'Enter' && !event.altKey && this.props.match && !this.props.match.params.id){
+      event.preventDefault();
+      event.target.value = ""
+    }
+    else if(event.key === 'Enter' && event.altKey){
+      event.target.value += "\n"
+    }
+  }
+
+
+  handleContentChange(e) {
     this.setState({
-      showDropdown: false
-    })
+      content: e.target.value
+    });
   }
 
-  
 
-   handleLogout(){
-    this.props.logout(() => {
-      this.props.history.push('/login')
-    })
-  }
 
   render() {
     const {profile} = this.props
@@ -59,9 +83,84 @@ class ChatApp extends Component {
     return (
         <div className = {styles.chatbox}>
             <div className={this.props.showSidebar ? "d-none" : "chat" }>
-                <div className="chat-header clearfix">
-                 
-                </div>        
+                <div className="chat-header clearfix"></div>  
+                <div className="chat-history" id="box-chat">
+                    <ul>
+                        {!!this.state.messages.length && this.state.messages.map((item, key) =>{
+                                if(!(item.content || (item.images && item.images.length))){
+                                    return null
+                                }
+                                return(
+                                    <li className={uid === item.belongTo ? "clearfix" : ""} key={key}>
+                                        <div className={uid === item.belongTo ? "message-data align-right" : "message-data"}>
+                                           {uid === item.belongTo ?
+                                                <div>
+                                                    <span className="message-data-time" data-tip={formatDate(item.chatAt, "DD/MM/YYYY, hh:mm A")}>
+                                                      {formatDate(item.chatAt, "hh:mm A, dddd")}
+                                                    </span> &nbsp; &nbsp;
+                                                    <ReactTooltip />
+                                                    <span className="message-data-name">{uid === item.belongTo ? display_name : this.props.infoUser.name}</span> &nbsp;
+                                                    <span className={uid === item.belongTo ? "circle me" : "circle other"}/>
+                                                  </div>
+                                                  :
+                                                  <div>
+                                                    <span className="message-data-name">
+                                                      <span className={uid === item.belongTo ? "circle me" : "circle other"}/>
+                                                      {uid === item.belongTo ? display_name : this.props.infoUser.name}
+                                                    </span>
+                                                    <span className="message-data-time" data-tip={formatDate(item.chatAt, "DD/MM/YYYY, hh:mm A")}>
+                                                      {formatDate(item.chatAt, "hh:mm A, dddd")}
+                                                    </span> &nbsp; &nbsp;
+                                                    <ReactTooltip />
+                                                </div>
+                                           } 
+                                        </div>
+                                        <div className={uid === item.belongTo ? "message my-message float-right" : "message other-message"}>
+                                            {item.content ?
+                                                <p dangerouslySetInnerHTML={{ __html: item.content }}></p>
+                                                : null
+                                            }
+                                            {item.images && !!item.images.length && item.images.length > 1 &&
+                                                <SlickLightbox images={item.images} />
+                                            }
+                                            {item.images && item.images.length === 1 &&
+                                                <p>
+                                                    <img src={item.images[0]} alt="message-img" style={{height: '200px', width: '200px'}}/>
+                                                </p>
+                                            }
+                                        </div>
+                                    </li>
+                                )
+                            })
+                        }
+                    </ul>  
+                </div>
+                <div className="chat-message clearfix">
+                    <form onSubmit={this.handleOnSubmit.bind(this)}>
+                        <textarea name="message-to-send" id="message-to-send" placeholder="Nhập tin nhắn" rows={3}
+                        value={this.state.content} onKeyPress={this.handleKeyPress.bind(this)} onChange={this.handleContentChange.bind(this)}/>
+                        <span className="media">
+                            <div className="image-box">
+                                <div className="preview-box">
+                                    {this.state.files && this.state.files.map((item, key) => {
+                                        return(
+                                          <div className="tag" key={key}>
+                                            <button type="button" className="close-x" onClick={this.handleRemoveImage.bind(this, key)}>
+                                              <span>X</span>
+                                            </button>
+                                            <p>{item.name}</p>
+                                          </div>
+                                        )
+                                      })
+                                    }
+                                </div>
+                            </div>
+                            <button type="button" className="btn-send d-sm-block d-none" onClick={this.handleOnSubmit.bind(this)}>
+                                <Icon icon={send} size={24} style={{background: 'transparent !important', color: '#4EBDEB'}}/>
+                            </button>
+                        </span>
+                    </form>
+                </div>      
             </div>
 
         </div>
@@ -93,9 +192,16 @@ const mapStateToProps = (state) => {
   }
 }
 
+const mapDispatchToProps = (dispatch) => {
+  return{
+    logout: (redirectCallback) => dispatch(logout(redirectCallback)),
+    sendMessage: (data, callback) => dispatch(sendMessage(data, callback))
+  }
+}
+
 export default withRouter(
   compose(
     withFirestore,
-    connect(mapStateToProps , null)
+    connect(mapStateToProps , mapDispatchToProps)
   )(ChatApp)
 );

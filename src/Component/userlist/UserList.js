@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import styles from'./UserList.scss';
+import styles from './UserList.scss'
 import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
@@ -145,12 +145,11 @@ class ListUsers extends Component {
       filteredListUsers = listUsers
     }
     return (
-      <div className={styles.userListComponent}>
+      <div className = {styles.userListComponent}>
         <div className={this.props.showSidebar ? "people-list show" : "people-list"} id="people-list">
           <div className="search">
             <span className="logo-mobile">
-              <button className="btn btn-toggle" onClick={this.handleToggleSidebar.bind(this)}><Icon icon={chevronLeft} size={22} style={{color: '#444753'}} /></button>
-              
+             <button className="btn btn-toggle" onClick={this.handleToggleSidebar.bind(this)}><Icon icon={chevronLeft} size={22} style={{color: '#444753'}} /></button>
               
             </span>
             <input type="text" placeholder="search" onChange={this.handleChange.bind(this)} value={this.state.name}/>

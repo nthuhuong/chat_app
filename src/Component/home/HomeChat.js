@@ -6,15 +6,15 @@ import { saveItem, loadItem } from '../../services/localStorage.services'
 import { accountStatus } from '../../constants/localStorage'
 import UsersList from '../userlist/UserList'
 import ChatApp  from '../chat/ChatApp'
-//import { updateStatus } from '../../actions'
+import { updateStatus } from '../../store/actions/authActions'
 import {firestoreConnect} from 'react-redux-firebase'
 import {compose} from 'redux'
 
-/*const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch) => {
   return{
     updateStatus: () => dispatch(updateStatus())
   }
-}*/
+}
 
 const mapStateToProps = (state) => {
   return{}
@@ -50,11 +50,8 @@ class Home extends Component {
     return (
       <div className={styles.homePage}>
         <div className="container-app clearfix">
-          
-
-
-        <UsersList showSidebar={this.state.showSidebar} toggleSidebar={this.handleToggleSidebar.bind(this)}/>
-        <ChatApp showSidebar={this.state.showSidebar} toggleSidebar={this.handleToggleSidebar.bind(this)}/>
+          <UsersList showSidebar={this.state.showSidebar} toggleSidebar={this.handleToggleSidebar.bind(this)}/>
+          <ChatApp showSidebar={this.state.showSidebar} toggleSidebar={this.handleToggleSidebar.bind(this)}/>
         </div>
         {/* end container */}
       </div>

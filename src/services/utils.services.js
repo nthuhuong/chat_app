@@ -1,7 +1,7 @@
 import {formatDistance, compareDesc} from 'date-fns'
-//import locale from 'date-fns/locale/vi'
+//import locale from 'data-fns/locale/vi'
 import format from 'date-fns/format'
-import isImageUrl from'is-image-url';
+import isImageUrl from'is-image-url'
 
 export function fromNowTimeStamp(timestamp) {
   let date = new Intl.DateTimeFormat('en-US', {year: 'numeric', month: '2-digit',day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit'}).format(timestamp)
@@ -20,9 +20,9 @@ export function connectStringID(string1, string2){
   return string2 + string1;
 }
 
-/*export function formatDate(date, name='DD/MM/YYYY') {
-	return format(new Date(date), name, {locale: locale})
-}*/
+export function formatDate(date, name='DD/MM/YYYY') {
+	return format(new Date(date), name)
+}
 
 export function compareDateReverse(dateLeft, dateRight){
   return compareDesc(new Date(dateLeft), new Date(dateRight))
