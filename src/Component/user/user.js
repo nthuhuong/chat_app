@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import styles from './user.scss';
+import styles from './User.scss';
 import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'

@@ -75,6 +75,13 @@ class ChatApp extends Component {
   }
 
 
+  handleOnSelectFile(event){
+    let files = event.target.files
+    this.setState({
+      files: [...this.state.files, ...files]
+    })
+  }
+
 
   render() {
     const {profile} = this.props
@@ -82,8 +89,7 @@ class ChatApp extends Component {
     const display_name = profile.display_name ? profile.display_name : profile.displayName
     return (
         <div className = {styles.chatbox}>
-            <div className={this.props.showSidebar ? "d-none" : "chat" }>
-                <div className="chat-header clearfix"></div>  
+            <div className={this.props.showSidebar ? "d-none" : "chat" }> 
                 <div className="chat-history" id="box-chat">
                     <ul>
                         {!!this.state.messages.length && this.state.messages.map((item, key) =>{
@@ -140,6 +146,7 @@ class ChatApp extends Component {
                         <textarea name="message-to-send" id="message-to-send" placeholder="Nhập tin nhắn" rows={3}
                         value={this.state.content} onKeyPress={this.handleKeyPress.bind(this)} onChange={this.handleContentChange.bind(this)}/>
                         <span className="media">
+
                             <div className="image-box">
                                 <div className="preview-box">
                                     {this.state.files && this.state.files.map((item, key) => {
@@ -155,8 +162,12 @@ class ChatApp extends Component {
                                     }
                                 </div>
                             </div>
+                            <label htmlFor="image-upload" className="fileImage">
+                              <Icon icon={fileImageO} size={18} /> &nbsp;&nbsp;&nbsp;
+                              <input id="image-upload" type="file" multiple accept="image/*" onChange={this.handleOnSelectFile.bind(this)} style={{display: "none"}}/>
+                            </label>
                             <button type="button" className="btn-send d-sm-block d-none" onClick={this.handleOnSubmit.bind(this)}>
-                                <Icon icon={send} size={24} style={{background: 'transparent !important', color: '#4EBDEB'}}/>
+                                <Icon icon={send} size={24} style={{background: 'transparent !important', color: '#FF0099'}}/>
                             </button>
                         </span>
                     </form>

@@ -29,7 +29,7 @@ class Home extends Component {
     }
   }
 
- /*componentDidMount(){
+ componentDidMount(){
     if(loadItem('account_status') === accountStatus.UNLOGGED){
       this.props.history.push('/login')
     }
@@ -38,7 +38,7 @@ class Home extends Component {
       document.body.style.overflow = 'hidden'
       this.props.updateStatus()
     }
-  }*/
+  }
 
   handleToggleSidebar(){
     this.setState({
@@ -62,6 +62,6 @@ class Home extends Component {
 export default withRouter(
   compose(
     firestoreConnect(['users', 'chatbox']),
-    connect(mapStateToProps, null)
+    connect(mapStateToProps, mapDispatchToProps)
   )(Home)
 );
